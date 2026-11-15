@@ -13,7 +13,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.ArrayList;
 import java.util.List;
 
-/** 강화 단계 읽기/쓰기 및 강화 효과를 관리합니다. */
+
 public final class EnhancementService {
     public static final int MAX_LEVEL = 15;
     private static final String LORE_PREFIX = "[ToolEnhance] ";
@@ -77,7 +77,7 @@ public final class EnhancementService {
         return Math.max(0, Math.min(100, percentPerLevel * level));
     }
 
-    /** 강화 성공 시 아이템 내부 데이터와 툴팁을 갱신합니다. */
+    
     public void applyUpgrade(ItemStack item, int newLevel) {
         if (!isSupported(item.getType()) || newLevel < 1 || newLevel > MAX_LEVEL) {
             throw new IllegalArgumentException("Invalid item type or enhancement level");
@@ -87,10 +87,10 @@ public final class EnhancementService {
             throw new IllegalArgumentException("Item metadata unavailable");
         }
 
-        // 강화 데이터는 서버 재시작 후에도 아이템에 유지됩니다.
+        
         meta.getPersistentDataContainer().set(levelKey, PersistentDataType.INTEGER, newLevel);
 
-        // 기존 사용자 지정 로어는 보존하고, 이전에 생성한 플러그인 로어만 교체합니다.
+        
         List<Component> lore = meta.lore() == null
                 ? new ArrayList<>() : new ArrayList<>(meta.lore());
         lore.removeIf(line -> PlainTextComponentSerializer.plainText().serialize(line)
@@ -105,7 +105,7 @@ public final class EnhancementService {
                 + String.format(java.util.Locale.ROOT, "%.0f%%", getDurabilitySaveRate(newLevel)),
                 NamedTextColor.GREEN));
 
-        // 곡괭이/도끼/삽/괭이의 채굴 효율을 단계별로 올립니다.
+        
         if (isMiningTool(item.getType())) {
             int interval = Math.max(1, plugin.getConfig()
                     .getInt("mining-efficiency-every-levels", 3));
@@ -118,7 +118,7 @@ public final class EnhancementService {
         }
 
         meta.lore(lore);
-        // 이름/기존 마법부여는 그대로 두고 강화된 아이템에 빛나는 효과를 줍니다.
+        
         meta.setEnchantmentGlintOverride(true);
         item.setItemMeta(meta);
     }
