@@ -1,0 +1,12 @@
+name: ToolEnhance
+version: '1.0.0'
+main: com.example.toolenhance.ToolEnhancePlugin
+api-version: '26.3'
+description: Tool enhancement plugin for Paper Minecraft 26.3
+permissions:
+  toolenhance.use:
+    description: Allows players to enhance held tools
+    default: true
+  toolenhance.admin:
+    description: Allows administrators to reload enhancement settings
+    default: op
